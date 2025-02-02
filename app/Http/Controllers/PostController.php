@@ -54,6 +54,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        // dd($post);
         return view('posts.show', compact('post'));
     }
 
@@ -75,7 +76,7 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'content' => 'required',
-            'category_id' => 'required|exist:categories,id'
+            'category_id' => 'required|exists:categories,id'
         ]);
         $post->update([
             'title' => $request->title,
