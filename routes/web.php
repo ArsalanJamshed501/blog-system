@@ -31,6 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::get('/user/{user}', [ProfileController::class, 'show'])->name('profile.show');
+
     Route::resource('posts', PostController::class);
     // Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
     // Route::post('/posts/create', [PostController::class, 'store'])->name('posts.store');
