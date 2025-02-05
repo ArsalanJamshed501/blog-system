@@ -32,10 +32,24 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        // $request->user()->fill($request->validated());
+        $request->user()->fill(array_merge(
+            $request->validated(), // Validates username and email.
+            $request->validate([ // Validates bio.
+                'bio' => 'nullable|string|max:560',
+                'profile_picture' => 'nullable|image|mimes:jpg,png,jpeg|max:2048'
+            ])
+        ));
+        // let text = string.replace(/\\n/g, "\n"); JS syntax for letting newline characters pass through.
+        // Need to find a way to integrate its php version in validate method.
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
+        }
+
+        if($request->hasFile('profile_picture')) {
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+            $request->user()->profile_picture = $path;
         }
 
         $request->user()->save();
