@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Post;
+use App\Notifications\PostInteractionNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,6 +19,10 @@ class CommentController extends Controller
             'user_id' => Auth::id(),
             'post_id' => $post->id
         ]);
+
+        if($post->user_id <> Auth::id()) {
+            $post->user->notify(new PostInteractionNotification(Auth::user(), $post, 'comment'));
+        }
 
         return redirect()->route('posts.show', $post)->with('success', 'Comment added!');
     }

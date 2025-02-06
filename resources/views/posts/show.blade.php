@@ -2,10 +2,12 @@
 <x-app-layout>
 
 {{-- @section('content') --}}
-<div class="container">
+<div class="container max-w-7xl mx-auto sm:px-6 lg:px-8">
     <h1 class="text-3xl font-bold mb-2">{{ $post->title }}</h1>
-    {{-- @dd($post->id) --}}
-    <p class="text-gray-600">By {{ $post->user->name }} in {{ $post->category->name }}</p>
+    
+    <p class="text-gray-600">
+        By <a href="{{ route('profile.show', $post->user->id) }}">{{ $post->user->name }}</a> in {{ $post->category->name }}
+    </p>
     <p class="mt-4">{{ $post->content }}</p>
 
     @auth
@@ -23,12 +25,26 @@
         @endif
     @endauth
 
+    <form action="{{ route('posts.like', $post) }}" method="post">
+        @csrf
+        <button class="bg-red-500 text-white px-4 py-2 rounded">
+            @if ($post->isLikedBy(Auth::user()))
+                ❤️ Unlike ({{ $post->likes->count() }})
+            @else
+                🤍 Like ({{ $post->likes->count() }})
+            @endif
+        </button>
+    </form>
+
+    {{-- Comment Section --}}
     <div class="mt-8">
         <h2 class="text-2xl font-bold">Comments</h2>
 
         @foreach ($post->comments as $comment)
             <div class="mt-4 p-4 border rounded">
-                <p class="text-gray-600"><strong>{{ $comment->user->name }}</strong> said:</p>
+                <p class="text-gray-600">
+                    <strong><a href="{{ route('profile.show', $comment->user->id) }}">{{ $comment->user->name }}</a></strong> said:
+                </p>
                 <p>{{ $comment->content }}</p>
 
                 @auth
@@ -50,8 +66,9 @@
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">Add Comment</button>
             </form>
         @else
-            <p class="text-gray-500 mt-4">You must be logged in to comment.</p>
+            <p class="text-gray-500 mt-4">You must be <a href="{{ route('login') }}">logged in</a> to comment.</p>
         @endauth
+    </div>
 </div>
 {{-- @endsection --}}
 </x-app-layout>

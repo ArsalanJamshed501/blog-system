@@ -3,7 +3,7 @@
 
 {{-- @section('content') --}}
 {{-- <x-slot name="post"> --}}
-<div class="container">
+<div class="container max-w-7xl mx-auto sm:px-6 lg:px-8">
     <h1 class="text-2xl font-bold mb-4">All Posts</h1>
 
     {{-- @auth --}}
