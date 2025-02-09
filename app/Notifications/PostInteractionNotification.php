@@ -38,8 +38,13 @@ class PostInteractionNotification extends Notification
     }
 
     public function toDatabase(object $notifiable) {
+        if($this->type == "comment") {
+            $text = "commented on";
+        } elseif($this->type == "like") {
+            $text = "liked";
+        }
         return [
-            'message' => "{$this->user->name} has {$this->type}d your post.",
+            'message' => "{$this->user->name} has {$text} your post.",
             'post_id' => $this->post->id,
             'user_id' => $this->user->id,
             'type' => $this->type

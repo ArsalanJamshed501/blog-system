@@ -23,18 +23,18 @@
                 </form>
             </div>
         @endif
-    @endauth
 
-    <form action="{{ route('posts.like', $post) }}" method="post">
-        @csrf
-        <button class="bg-red-500 text-white px-4 py-2 rounded">
-            @if ($post->isLikedBy(Auth::user()))
-                ❤️ Unlike ({{ $post->likes->count() }})
-            @else
-                🤍 Like ({{ $post->likes->count() }})
-            @endif
-        </button>
-    </form>
+        <form action="{{ route('posts.like', $post) }}" method="post">
+            @csrf
+            <button class="bg-red-500 text-white px-4 py-2 rounded">
+                @if ($post->isLikedBy(Auth::user()))
+                    ❤️ Unlike ({{ $post->likes->count() }})
+                @else
+                    🤍 Like ({{ $post->likes->count() }})
+                @endif
+            </button>
+        </form>
+    @endauth
 
     {{-- Comment Section --}}
     <div class="mt-8">

@@ -36,12 +36,19 @@
                 
                 @auth
                     <div class="relative">
-                        <button id="notification-btn" class="relative bg-gray-200 px-3 py-2 rounded">
+                        <button id="notif-count" class="relative bg-gray-200 px-3 py-2 rounded">
                             🔔 Notifications ({{ auth()->user()->unreadNotifications->count() }})
                         </button>
 
-                        <div id="notification-dropdown" class="absolute right-0 mt-2 w-64 bg-white shadow-lg rounded hidden">
+                        <div id="notification-list" class="absolute right-0 mt-2 w-64 bg-white shadow-lg rounded hidden">
                             <ul>
+                                @if (Auth::user()->unreadNotifications->count() == 0)
+                                    <li class="border-b px-4 py-2 text-center">
+                                        No new notifications
+                                    </li>
+                                @else
+                                    
+                                @endif
                                 @foreach(auth()->user()->unreadNotifications as $notification)
                                     <li class="border-b px-4 py-2">
                                         <a href="{{ route('notifications.read', $notification->id) }}">
@@ -54,8 +61,8 @@
                     </div>
 
                     <script>
-                        document.getElementById('notification-btn').addEventListener('click', function() {
-                            document.getElementById('notification-dropdown').classList.toggle('hidden');
+                        document.getElementById('notif-count').addEventListener('click', function() {
+                            document.getElementById('notification-list').classList.toggle('hidden');
                         });
                     </script>
                 @endauth
