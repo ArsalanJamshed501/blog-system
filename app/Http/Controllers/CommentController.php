@@ -28,6 +28,11 @@ class CommentController extends Controller
     }
 
     public function destroy(Comment $comment) {
+        if(Auth::user()->cannot('delete', $comment)) {
+            abort(403);
+        }
+
+        // redundant if block.
         if(Auth::id() <> $comment->user_id) {
             return back()->with('error', 'Unauthorized action!');
         }

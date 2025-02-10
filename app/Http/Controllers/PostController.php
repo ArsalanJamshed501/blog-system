@@ -63,6 +63,11 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        if(Auth::user()->cannot('update', $post)) {
+            // return redirect()->back();
+            abort(403);
+        }
+
         $categories = Category::all();
 
         return view('posts.edit', compact('post', 'categories'));
@@ -73,6 +78,10 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        if ($request->user()->cannot('update', $post)) {
+            abort(403);
+        }
+        
         $request->validate([
             'title' => 'required|max:255',
             'content' => 'required',
@@ -92,6 +101,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if(Auth::user()->cannot('update', $post)) {
+            abort(403);
+        }
+
         $post->delete();
 
         return redirect()->route('posts.index')->with('success', 'Post deleted successfully!');

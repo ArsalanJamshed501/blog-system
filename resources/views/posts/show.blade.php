@@ -11,7 +11,9 @@
     <p class="mt-4">{{ $post->content }}</p>
 
     @auth
-        @if(auth()->id() === $post->user_id)
+    {{-- Edit and Delete Buttons --}}
+        {{-- @if(auth()->id() === $post->user_id) --}}
+        @canany(['update', 'delete'], $post)
             <div class="mt-4">
                 <a href="{{ route('posts.edit', $post) }}" class="bg-yellow-500 text-white px-4 py-2 rounded">Edit</a>
 
@@ -22,8 +24,10 @@
                         onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
                 </form>
             </div>
-        @endif
+        {{-- @endif --}}
+        @endcanany
 
+        {{-- Post Likes --}}
         <form action="{{ route('posts.like', $post) }}" method="post">
             @csrf
             <button class="bg-red-500 text-white px-4 py-2 rounded">
@@ -48,13 +52,15 @@
                 <p>{{ $comment->content }}</p>
 
                 @auth
-                    @if(auth()->id() === $comment->user_id)
+                    {{-- @if(auth()->id() === $comment->user_id) --}}
+                    @can('delete', $comment)
                         <form action="{{ route('comments.destroy', $comment) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-500">Delete</button>
                         </form>
-                    @endif
+                    {{-- @endif --}}
+                    @endcan
                 @endauth
             </div>
         @endforeach
