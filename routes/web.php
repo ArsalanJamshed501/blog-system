@@ -52,6 +52,7 @@ Route::middleware('auth')->group(function () {
             $notification->markAsRead();
             return redirect()->route('posts.show', $notification->data['post_id']);
         }
+        // return response()->json(['success' => true]);
 
         return back()->with('error', 'Notification not found.');
     })->name('notifications.read');

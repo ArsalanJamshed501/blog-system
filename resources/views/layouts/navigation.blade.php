@@ -53,13 +53,51 @@
                                     <li class="border-b px-4 py-2">
                                         <a href="{{ route('notifications.read', $notification->id) }}">
                                             {{ $notification->data['message'] }}
+                                            <p class="text-sm text-gray-700">{{ $notification->created_at }}</p>
                                         </a>
                                     </li>
                                 @endforeach
                             </ul>
                         </div>
                     </div>
-
+                    {{-- <div x-data="{ open: false }" class="relative">
+                        <div x-data='{ notifications: @json(auth()->user()->unreadNotifications) }'>
+                            <button @click="open = !open" class="relative px-4 py-2 bg-gray-800 text-white rounded">
+                                Notifications
+                                <span class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2" x-show="notifications.length > 0" x-text="notifications.length">
+                                    <span id="notif-count">0</span>
+                                </span>
+                            </button>
+                    
+                            <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-64 bg-white shadow-md rounded p-2" x-ref="notifList">
+                                <template x-for="(notification, index) in notifications" :key="notification.id">
+                                    <div class="p-2 border-b last:border-none cursor-pointer" @click="markAsRead(notification.id, index)">
+                                        <p class="text-sm text-gray-700" x-text="notification.data.message"></p>
+                                        <p class="text-xs text-gray-500" x-text="new Date(notification.created_at).toLocaleString()"></p>
+                                    </div>
+                                </template>
+                                <p class="text-center text-gray-500 text-sm" x-show="notifications.length === 0">No new notifications</p>
+                            </div>
+                        </div>
+                    </div> --}}
+                    
+                    {{-- <script>
+                        function markAsRead(id, index) {
+                            notifications: @json(auth()->user()->unreadNotifications)
+                            fetch(`notifications/read/${id}`, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                    'Content-Type': 'application/json'
+                                }
+                            }).then(response => response.json()).then(data => {
+                                if(data.success) {
+                                    notifications.splice(index, 1);
+                                }
+                            });
+                        }
+                    </script> --}}
+                    
                     <script>
                         document.getElementById('notif-count').addEventListener('click', function() {
                             document.getElementById('notification-list').classList.toggle('hidden');
