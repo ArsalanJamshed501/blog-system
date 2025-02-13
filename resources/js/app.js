@@ -1,5 +1,8 @@
 import './bootstrap';
 
+import "trix";
+import "trix/dist/trix.css"
+
 import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;

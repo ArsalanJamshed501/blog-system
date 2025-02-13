@@ -14,7 +14,7 @@
             <p class="text-gray-600">By 
                 <a href="{{ route('profile.show', $post->user_id) }}">{{ $post->user->name }}</a>
                  in {{ $post->category->name }}</p>
-            <p>{{ Str::limit($post->content, 100) }}</p>
+            <p>{!! Str::limit(strip_tags($post->content, '<h1><h2><h3><h4><b><i><u><strong><em><p><br>'), 100, '...') !!}</p>
             <a href="{{ route('posts.show', $post) }}" class="text-blue-500">Read More</a>
         </div>
     @endforeach

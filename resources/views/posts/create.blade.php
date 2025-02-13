@@ -2,24 +2,25 @@
 <x-app-layout>
 
 {{-- @section('content') --}}
-<div class="container">
+<div class="container max-w-7xl mx-auto sm:px-6 lg:px-8">
     <h1 class="text-2xl font-bold mb-4">Create New Post</h1>
 
     <form action="{{ route('posts.store') }}" method="POST">
         @csrf
         <div class="mb-4">
-            <label class="block text-gray-700">Title</label>
-            <input type="text" name="title" class="w-full p-2 border rounded" required>
+            <label for="title" class="block text-gray-700">Title</label>
+            <input type="text" name="title" id="title" class="w-full p-2 border rounded" required>
         </div>
 
         <div class="mb-4">
-            <label class="block text-gray-700">Content</label>
-            <textarea name="content" class="w-full p-2 border rounded" rows="5" required></textarea>
+            <label for="content" class="block text-gray-700">Content</label>
+            <input name="content" id="content" type="hidden" class="w-full p-2 border rounded" rows="5" required>
+            <trix-editor input="content" class="w-full p-2 border rounded"></trix-editor>
         </div>
 
         <div class="mb-4">
-            <label class="block text-gray-700">Category</label>
-            <select name="category_id" class="w-full p-2 border rounded" required>
+            <label for="category_id" class="block text-gray-700">Category</label>
+            <select name="category_id" id="category_id" class="w-full p-2 border rounded" required>
                 @foreach ($categories as $category)
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach

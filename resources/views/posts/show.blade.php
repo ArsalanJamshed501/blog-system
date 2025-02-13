@@ -8,7 +8,8 @@
     <p class="text-gray-600">
         By <a href="{{ route('profile.show', $post->user->id) }}">{{ $post->user->name }}</a> in {{ $post->category->name }}
     </p>
-    <p class="mt-4">{{ $post->content }}</p>
+    {{-- <p class="mt-4">{{ $post->content }}</p> --}}
+    <p class="mt-4">{!! $post->content !!}</p>
 
     @auth
     {{-- Edit and Delete Buttons --}}
