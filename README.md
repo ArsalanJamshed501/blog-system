@@ -55,3 +55,15 @@ npm run dev
 ## License
 
 This project is open-source under [MIT License](https://opensource.org/licenses/MIT).
+
+
+## Note
+
+This project is currently under development, and vital features (including security) are being added overtime.
+
+
+## New Features to be added
+
+- search bar
+- filter, sort, and categories functionality
+- admin panel
